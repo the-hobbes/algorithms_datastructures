@@ -1,7 +1,10 @@
-# insertion sort
-# input: a sequence of n numbers {a1, a2, ..., aN)
-# output: a permutation of the input sequence such that (a`1 <= a`2, <= ..., <= a1N)
-# (lowest to highest)
+'''
+  insertion sort
+  input: a sequence of n numbers {a1, a2, ..., aN)
+  output: a permutation of the input sequence such that (a`1 <= a`2, <= ..., <= a1N)
+  (lowest to highest)
+  - o(n^2)
+'''
 
 UNSORTED_ELEMENTS = [5, 2, 4, 6, 1, 3]
 EXPECTED_RESULT = [1, 2, 3, 4, 5, 6]
