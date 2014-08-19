@@ -11,64 +11,75 @@
  	down on the output pile.
  	In the following, a sentinal value is added to each pile so that the 
  	algorithm doens't have to perform a check to see if a pile is empty. 
+
+ 	http://upload.wikimedia.org/wikipedia/commons/c/cc/Merge-sort-example-300px.gif
 '''
 
 import math
 
-INPUT = [5, 2, 4, 6, 1, 3]
-SENTINAL = None
+INPUT = [5, 2, 4, 6, 1, 8, 3, 7]
+EXPECTED_RESULT = [1, 2, 3, 4, 5, 6, 7, 8]
 
-def merge(A, p, q, r):
+def merge(A, start, mid, end):
 	''' Where:
 		- A is an array.
-		- p, q, and r are indecies into the array such that p <= q <= r
-		- p is the start (0th), q is the middle, and r is the end (nth) of the
-		arry.
-		Assume:
-		- A[p..q] and A[q+1..r] are sorted.
+		- start, mid and end are indecies into the array such that 
+		start <= mid <= end
+		- start is the 0th index, mid is the middle, and end is the last (nth) 
+		of the array.
 	'''
-	# compute the length of the subarrays A[p..q] and A[q+1..r]
-	n1 = (q - p) + 1
-	n2 = r - q 
+	# create left and right arrays from the original array
+	left_array = A[start:mid]
+	right_array = A[mid:end]
 
-	# create left and right arrays from the original array, using the lengths
-	# computed as slice indecies. Also add the sentinal value to each array
-	left_array = A[: n1]
-	right_array = A[n2 + 1 :] # TODO(pheven): fix the messup here
+	# loop variables for keeping track
+	left_index = 0 # keep track of the left index
+	right_index = 0 # keep track of the right index
 
-	left_array.append(SENTINAL)
-	right_array.append(SENTINAL)
+	# this is where the actual sorting is peformed
+	for k in range(start, end):
+		''' Explination of the if statement:
+			You need to handle the case when one of the lists is empty. Consider:
+				left_array = {1,2}, right_array = {3,4}, A = {}
+			Your first loop iteration will check the first element of both lists and decide it needs to use the first list, leaving you with:
+				list 1 = {2}, list 2 = {3,4}, merged = {1}
+			Your second loop iteration will check the first element of both lists and decide it needs to use the first list again, leaving you with:
+				list 1 = {}, list 2 = {3,4}, merged = {1,2}
+			Your third loop iteration will check the first element of both lists and barf because there is no first element in the first list.
 
-	i = 0
-	j = 0
-	for k in range(p, r):
-		if left_array[i] <= right_array[j]:
-			A[k] = left_array[i] # if the left element is smaller, choose it
-			i = i + 1 # and move onto the next element in the left array
+			So, you first check to see if the right index is larger than the length of the right array. This would mean that the right list is empty, 
+			and that you should use the value in the left array. 
+			If that's not the case, jump into the OR statement.
+			If the left index is less than the length of the left array, this tells you that the left array isn't empty yet. So you've made your check.
+			Then, you perform the actual comparison of elements in those arrays, to see which is bigger.
+		'''
+		if right_index >= len(right_array) or (left_index < len(left_array) and left_array[left_index] < right_array[right_index]):
+			A[k] = left_array[left_index] # the element at the left index is smaller.
+			left_index = left_index + 1 # and move onto the next element in the left array
 		else: # otherwise the right element is smaller
-			A[k] = right_array[j]
-			j = j + 1 # move onto the next element in the right array
+			A[k] = right_array[right_index]
+			right_index = right_index + 1 # move onto the next element in the right array
 
 
-def merge_sort(A, p, r):
+def merge_sort(A, start, end):
 	''' Sort the elements in the subarray A[p...r].
-		- if p >= r, then the subarray has at most one lement and is therefore
-		already sorted (the start index is greater than the end index, or they
-		are the same).
+		- if end - start <= 1, then the subarray has at most one lement and is 
+		therefore already sorted (eg 1-1=0).
 		- otherwise, another middle index is computed and two subarrays are 
 		formed, and the process continues.
 		- each of the array halves are merged by the merge subroutine.
 	'''
-	if p < r: # if the array isn't made of a single element
-		q = int(math.floor((p + r) / 2)) # middle point
-		merge_sort(A, p, q) # left half
-		merge_sort(A, q + 1, r) # right half
-		merge(A, p, q, r) # merge the halves
+	if end - start > 1: # if the array isn't made of a single element
+		mid = int((start + end) / 2) # middle point
+		merge_sort(A, start, mid) # left half
+		merge_sort(A, mid, end) # right half
+		merge(A, start, mid, end) # merge the halves
 
 
 def main():
   # sort an entire array with merge-sort
-  merge_sort(INPUT, 0, len(INPUT) -1)
+  merge_sort(INPUT, 0, len(INPUT))
+  assert INPUT == EXPECTED_RESULT
   print INPUT
 
 if __name__ == '__main__':
