@@ -32,16 +32,22 @@ def URLify(s, l):
 
 # 1.4 Palindrom permutation
 def PalindromePermuation(s):
-	def GeneratePermutations(s):
-		pass
-	def GeneratePalindromes(s):
-		pass
-
-	is_palindrome = False
-	permutations = GeneratePermutations(s)
-	palindromes = GeneratePermutations(permutations)
-	if len(palindromes) > 0: is_palindrome = True
-	return (is_palindrome, 'permutations: %s' % ', '.join(permutations))
+	# at most one character (in the middle) can have an odd count.
+	s = s.lower()
+	character_table = {}
+	for char in s:
+		if char in character_table:
+			character_table[char] += 1
+		else:
+			character_table[char] = 1
+	
+	seen_odd = False
+	for k,v in character_table.iteritems():
+		if v % 2 != 0:
+			if seen_odd == True:
+				return False
+			seen_odd = True
+	return True
 
 
 def main():
@@ -57,7 +63,8 @@ def main():
 	assert URLify('Mr John Smith    ', 13) == 'Mr%20John%20Smith'
 
 	# 1.4
-	assert PalindromePermuation('Tact Coa') == (True, 'permutations: taco cat, atco cta')
+	assert PalindromePermuation('Tact Cooa') == True
+	assert PalindromePermuation('Tact zzz') == False
 
 if __name__ == '__main__':
 	main()
