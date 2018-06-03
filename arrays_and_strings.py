@@ -50,6 +50,58 @@ def PalindromePermuation(s):
 	return True
 
 
+# 1.5 One Away
+def OneAway(s1, s2):
+	# Edits allowed: insert, remove, replace.
+
+	def isOneReplace(s1, s2):
+		found_difference = False
+		for x in xrange(0, len(s1) - 1):
+			if s1[x] != s2[x]:
+				if found_difference:
+					return False
+				found_difference = True
+		return True
+
+	def isOneInsertion(s1, s2):
+		"""Can you insert a character into s1 to make s2?
+			- Move through the strings, comparing each characet.
+			- If the character doesn't match, check the position in 
+			the string we are at by looking at the index. If they are
+			the same, then this is the first insertion and that is
+			allowed. Move to the next character by increasing the 
+			index in that string.
+			- If another comparison doesn't match, the indexes will
+			be compared and found to differ. This means there will be
+			more than one insertion edit needed to be done to s1 to
+			make s2, so we return false.
+		"""
+		index1 = 0
+		index2 = 0
+		while (index2 < len(s2)) and (index1 < len(s1)):
+			
+			if s1[index1] != s2[index2]:
+				if index1 != index2:
+					return False
+				index2 += 1
+			else:
+				index1 += 1
+				index2 += 1
+		return True
+
+	# Decide which checks should be called based on string length.
+	if len(s1) == len(s2):
+		# Must be a replacement.
+		return isOneReplace(s1, s2)
+	elif len(s1) + 1 == len(s2):
+		# Must be an insertion.
+		return isOneInsertion(s1, s2)
+	elif len(s1) - 1 == len(s2):
+		# Must be a removal. Same as insertion but reversed.
+		return isOneInsertion(s2, s1)
+
+	return False
+
 def main():
 	# 1.1
 	assert IsUnique('xxapdfrrgcg433fdx') == False
@@ -65,6 +117,11 @@ def main():
 	# 1.4
 	assert PalindromePermuation('Tact Cooa') == True
 	assert PalindromePermuation('Tact zzz') == False
+
+	# 1.5
+	assert OneAway('pale', 'ple') == True
+	# assert OneAway('pale', 'bale') == True
+	# assert OneAway('pale', 'bake') == False
 
 if __name__ == '__main__':
 	main()
