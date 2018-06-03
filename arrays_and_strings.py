@@ -65,7 +65,7 @@ def OneAway(s1, s2):
 
 	def isOneInsertion(s1, s2):
 		"""Can you insert a character into s1 to make s2?
-			- Move through the strings, comparing each characet.
+			- Move through the strings, comparing each character.
 			- If the character doesn't match, check the position in 
 			the string we are at by looking at the index. If they are
 			the same, then this is the first insertion and that is
@@ -79,7 +79,6 @@ def OneAway(s1, s2):
 		index1 = 0
 		index2 = 0
 		while (index2 < len(s2)) and (index1 < len(s1)):
-			
 			if s1[index1] != s2[index2]:
 				if index1 != index2:
 					return False
@@ -102,6 +101,24 @@ def OneAway(s1, s2):
 
 	return False
 
+
+# 1.6 String compression.
+def StringCompression(s):
+	prev = None
+	count = 1
+	compression = ''
+	for char in s:
+		if prev == char:
+			count += 1
+		else:
+			compression += char
+			compression += str(count)
+			count = 1
+			prev = char
+	print compression
+	return compression
+
+
 def main():
 	# 1.1
 	assert IsUnique('xxapdfrrgcg433fdx') == False
@@ -120,8 +137,11 @@ def main():
 
 	# 1.5
 	assert OneAway('pale', 'ple') == True
-	# assert OneAway('pale', 'bale') == True
-	# assert OneAway('pale', 'bake') == False
+	assert OneAway('pale', 'bale') == True
+	assert OneAway('pale', 'bake') == False
+
+	# 1.6
+	assert StringCompression('aabbcccccaaa') == 'a2b1c5a3'  # fix a count
 
 if __name__ == '__main__':
 	main()
