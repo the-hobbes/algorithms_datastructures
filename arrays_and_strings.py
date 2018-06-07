@@ -113,7 +113,7 @@ def StringCompression(s):
 			compression.append(s[x])
 			compression.append(str(count))
 			count = 0
-	print ''.join(compression)
+	if len(s) < len(compression): return s
 	return ''.join(compression)
 
 
@@ -140,6 +140,7 @@ def main():
 
 	# 1.6
 	assert StringCompression('aabbcccccaaa') == 'a2b2c5a3'
+	assert StringCompression('abca') == 'abca'
 
 if __name__ == '__main__':
 	main()
