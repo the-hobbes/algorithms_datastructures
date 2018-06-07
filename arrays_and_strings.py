@@ -117,6 +117,26 @@ def StringCompression(s):
 	return ''.join(compression)
 
 
+# 1.7 Rotate Matrix 90 degrees clockwise.
+def RotateMatrix(matrix):
+	n = len(matrix)
+	for layer in range(n // 2):
+		# // == integer division. Layer is either 0 or 1.
+		first, last = layer, n - layer - 1
+		for i in range(first, last):
+			# save top
+			top = matrix[layer][i]
+			# left -> top
+			matrix[layer][i] = matrix[-i - 1][layer]
+			# bottom -> left
+			matrix[-i - 1][layer] = matrix[-layer - 1][-i - 1]
+			# right -> bottom
+			matrix[-layer - 1][-i - 1] = matrix[i][- layer - 1]
+			# top -> right
+			matrix[i][- layer - 1] = top
+	return matrix
+
+
 def main():
 	# 1.1
 	assert IsUnique('xxapdfrrgcg433fdx') == False
@@ -141,6 +161,19 @@ def main():
 	# 1.6
 	assert StringCompression('aabbcccccaaa') == 'a2b2c5a3'
 	assert StringCompression('abca') == 'abca'
+
+	# 1.7
+	given = [[1, 2, 3, 4, 5],
+					 [6, 7, 8, 9, 10],
+					 [11, 12, 13, 14, 15],
+					 [16, 17, 18, 19, 20],
+					 [21, 22, 23, 24, 25]]
+	expected = [[21, 16, 11, 6, 1],
+  					  [22, 17, 12, 7, 2],
+						  [23, 18, 13, 8, 3],
+					    [24, 19, 14, 9, 4],
+						  [25, 20, 15, 10, 5]]
+	assert RotateMatrix(given) == expected
 
 if __name__ == '__main__':
 	main()
