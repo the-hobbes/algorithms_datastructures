@@ -104,23 +104,16 @@ def OneAway(s1, s2):
 
 # 1.6 String compression.
 def StringCompression(s):
-	current = 0
-	previous = 0
 	count = 0
 	compression = []
-
-	while current < len(s):
-		if s[current] == s[previous]:
-			count += 1
-		else:
-			compression.append(s[previous])
+	for x in xrange(0, len(s)):
+		count += 1
+		# if next char is different than current, append.
+		if ((x + 1) >= len(s) or (s[x] != s[x + 1])):
+			compression.append(s[x])
 			compression.append(str(count))
-			count = 1
-		previous = current
-		current += 1 
-
-	compression.append(s[previous])
-	compression.append(str(count))
+			count = 0
+	print ''.join(compression)
 	return ''.join(compression)
 
 
