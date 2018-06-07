@@ -104,19 +104,24 @@ def OneAway(s1, s2):
 
 # 1.6 String compression.
 def StringCompression(s):
-	prev = None
-	count = 1
-	compression = ''
-	for char in s:
-		if prev == char:
+	current = 0
+	previous = 0
+	count = 0
+	compression = []
+
+	while current < len(s):
+		if s[current] == s[previous]:
 			count += 1
 		else:
-			compression += char
-			compression += str(count)
+			compression.append(s[previous])
+			compression.append(str(count))
 			count = 1
-			prev = char
-	print compression
-	return compression
+		previous = current
+		current += 1 
+
+	compression.append(s[previous])
+	compression.append(str(count))
+	return ''.join(compression)
 
 
 def main():
@@ -141,7 +146,7 @@ def main():
 	assert OneAway('pale', 'bake') == False
 
 	# 1.6
-	assert StringCompression('aabbcccccaaa') == 'a2b1c5a3'  # fix a count
+	assert StringCompression('aabbcccccaaa') == 'a2b2c5a3'
 
 if __name__ == '__main__':
 	main()
