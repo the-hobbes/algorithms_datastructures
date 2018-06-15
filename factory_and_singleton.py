@@ -21,11 +21,10 @@ class Boat(Vehicle):
 	def drive(self):
 		return 'splish splash'
 
-class Singleton(object):
+class Singleton():
 	'''Singleton class ensures only one instance is ever created.'''
 	instance = None
-
-	class __Singleton(object):
+	class __Singleton():
 		'''The first time you create an OnlyOne, it initializes 
 			instance, but after that it just ignores you.'''
 		def __init__(self, arg):
@@ -55,7 +54,6 @@ def main():
 	print b
 	r = Singleton('raven')
 	print r
-
 	
 
 if __name__ == '__main__':
