@@ -8,9 +8,10 @@ class Queue(object):
 		def __init__(self, data=None):
 			self.data = data
 	
-	# Pointers to both ends of the queue.		
-	first = None
-	last = None
+	def __init__(self):
+		# Pointers to both ends of the queue.		
+		self.first = None
+		self.last = None
 
 	def Enqueue(self, item):
 		"""Add an item to the end of the list =>[n1, n2, n3]."""
