@@ -38,12 +38,11 @@ def _QuickSort(data, left_pointer, right_pointer):
 	"""Quicksort."""
 	if left_pointer >= right_pointer:
 		# Base case: one element left.
-		return data
+		return
 	index = partition(data, left_pointer, right_pointer)
 	# Call quicksort on both sides of the partition.
 	_QuickSort(data, left_pointer, index - 1)  # left partition
 	_QuickSort(data, index + 1, right_pointer)  # right partition
-	return data
 
 def QuickSort(data):
 	left_pointer = 0
