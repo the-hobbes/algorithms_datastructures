@@ -43,6 +43,7 @@ def MergeSort(data):
 			but it makes it easier to reason about the left and right sub lists.
 	"""
 	if len(data) <= 1:
+		# Base case: we've got nothing else to split in half.
 		return data
 	middle = int(len(data) / 2)
 	left = MergeSort(data[:middle])
