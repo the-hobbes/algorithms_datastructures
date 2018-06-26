@@ -6,9 +6,9 @@
 
 class Node(object):
 	"""Binary tree.
-		Each node has no more than two child nodes.
-		Binary search tree: a binary tree whose any subtree contains left
-		nodes less than root nodes, which are less than right nodes.
+		- Each node has no more than two child nodes.
+		- Binary search tree: a binary tree whose any subtree contains left
+			nodes less than root nodes, which are less than right nodes.
 	"""
 
 	def __init__(self, data=None):
@@ -77,7 +77,6 @@ class Node(object):
 			self.right.PostOrderTraversal(l)
 		l.append(self.data)
 		return l
-
 
 
 def main():

@@ -2,12 +2,16 @@
 
 
 def DepthFirstSearch(graph, root, visited=None):
-	"""Go deep.
+	"""Go deep (stack, recursion).
 			Explores possible vertices (from a supplied root) 
 			down each branch before backtracking. Does two things:
 			- Mark the current vertex as being visited.
 			- Explore each adjacent vertex that is not included
 				in the visited set.
+			- pre, post and in-order traversal are forms of DFS. The key difference
+				between implementing this algorithm on a graph vs a tree is that we must
+				check if the node has been visited already- if we don’t we risk getting
+				stuck in an infinite loop.
 	"""
 	if visited is None:
 		visited = set()
@@ -18,17 +22,20 @@ def DepthFirstSearch(graph, root, visited=None):
 		
 
 def BreadthFirstSearch(graph, root):
-	"""Go wide.
+	"""Go wide (queue, iteration).
 			Search level by level, out from the root. Use a queue to
 			save all the neighbors to visit.
+			- Time complexity is O(n), where n == number of nodes.
 	"""
+	# Nodes we've visited.
 	visited = set()
+	# Nodes whose location we know, but we have yet to actually visit.
 	queue = [root]
 	while queue:
-		vertex = queue.pop()
-		if vertex not in visited:
-			visited.add(vertex)
-			queue.extend(graph[vertex] - visited)
+		next_node = queue.pop()
+		if next_node not in visited:
+			visited.add(next_node)
+			queue.extend(graph[next_node] - visited)
 	return visited
 
 
