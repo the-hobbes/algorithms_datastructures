@@ -9,7 +9,6 @@
 		Finally, we combine all the elements in the buckets to get a sorted array.
 """
 
-from collections import defaultdict
 
 def InsertionSort(data):
 	"""Sort like playing cards in your hand.
