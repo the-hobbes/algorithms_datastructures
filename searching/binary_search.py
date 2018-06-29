@@ -14,9 +14,9 @@ def BinarySearch(data, searchterm):
 		# Our list is 1 element long, but we haven't found the term after the check.
 		return False
 	elif searchterm > midpoint:
-		BinarySearch(data[midpoint:], searchterm)
+		return BinarySearch(data[midpoint:], searchterm)
 	else:
-		BinarySearch(data[:midpoint], searchterm)
+		return BinarySearch(data[:midpoint], searchterm)
 
 
 def main():
