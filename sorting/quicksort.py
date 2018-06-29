@@ -5,6 +5,7 @@
 		pivot come before all elements > pivot.
 		- Repeat the process, appliying it to the left and right portions around the 
 		pivot.
+		Good visual explanation: https://www.youtube.com/watch?v=aQiWF4E8flQ
 """
 
 def partition(data, left_pointer, right_pointer):
